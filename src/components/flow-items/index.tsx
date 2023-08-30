@@ -1,10 +1,10 @@
-import { models } from "../../schema";
+import * as schema from "../../schema";
 import styles from "./flow-icon.module.css";
 
 import { flowItemTypePresentation } from "../../data/flows";
 
 type FlowItemIconProps = IconProps & {
-  flowItemType: models.FlowItemType;
+  flowItemType: schema.FlowItemType;
 };
 
 export const FlowItemIcon = ({
@@ -24,7 +24,7 @@ export const FlowItemIcon = ({
 };
 
 export const flowItemIconComponentForType = (
-  flowItemType: models.FlowItemType
+  flowItemType: schema.FlowItemType
 ) => {
   switch (flowItemType) {
     case "action":

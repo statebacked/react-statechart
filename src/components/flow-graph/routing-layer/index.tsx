@@ -1,4 +1,4 @@
-import { models } from "../../../schema";
+import * as schema from "../../../schema";
 import {
   Connector,
   getStatePositionId,
@@ -18,9 +18,9 @@ export const RoutingLayer = ({
   initialState,
   transitions,
 }: {
-  sourceState: models.StateId;
+  sourceState: schema.StateId;
   positions: Map<PositionedItemId, PositionInfo>;
-  initialState?: models.StateId;
+  initialState?: schema.StateId;
   transitions: { has: (transitionId: PositionedItemId) => boolean };
 }) => {
   const connectorPoss = Array.from(positions.values()).filter(

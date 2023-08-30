@@ -1,6 +1,7 @@
 import typescript from "@rollup/plugin-typescript";
 import autoprefixer from "autoprefixer";
 import postcss from "rollup-plugin-postcss";
+import postcssSvg from "postcss-svg";
 
 export default {
   input: "src/index.ts",
@@ -19,7 +20,7 @@ export default {
   plugins: [
     typescript(),
     postcss({
-      plugins: [autoprefixer()],
+      plugins: [autoprefixer(), postcssSvg()],
       sourceMap: true,
       extract: true,
       minimize: true,

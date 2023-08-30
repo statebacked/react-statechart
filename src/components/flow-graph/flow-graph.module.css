@@ -8,6 +8,97 @@
   user-select: none;
 }
 
+.flowGraph {
+  --grid-background-color: var(--grid-background-color-override, #f4f7f8);
+  --grid-background-50p-color: var(
+    --grid-background-50p-color-override,
+    #f4f7f880
+  );
+  --flow-header-background-color: var(
+    --flow-header-background-color-override,
+    #fff
+  );
+  --flow-header-text-color: var(--flow-header-text-color-override, #29273d);
+
+  --top-level-node-border-color: var(
+    --top-level-node-border-color-override,
+    #dadada
+  );
+
+  --popup-background-color: var(--popup-background-color-override, #ffffff);
+  --popup-border-color: var(--popup-border-color-override, #f2f2f2);
+
+  --select-background-color: var(--select-background-color-override, #ffffff);
+  --select-divider-color: var(--select-divider-color-override, #e4e3e5);
+  --select-hover-background-color: var(
+    --select-hover-background-color-override,
+    #f2f2f2
+  );
+
+  --state-primary-color: var(--state-primary-color-override, #ffcf5c);
+  --state-primary-50p-color: var(--state-primary-50p-color-override, #ffcf5c80);
+  --state-background-color: var(--state-background-color-override, #ffefc966);
+  --state-background-10p-color: var(
+    --state-background-10p-color-override,
+    #ffefc919
+  );
+  --state-border-color: var(--state-border-color-override, #ffdf92);
+
+  --action-primary-color: var(--action-primary-color-override, #00a3ff);
+  --action-primary-50p-color: var(
+    --action-primary-50p-color-override,
+    #00a3ff80
+  );
+  --action-background-color: var(--action-background-color-override, #a6d6ff66);
+  --action-background-10p-color: var(
+    --action-background-10p-color-override,
+    #a6d6ff19
+  );
+  --action-border-color: var(--action-border-color-override, #3eb9ff);
+
+  --event-primary-color: var(--event-primary-color-override, #8753dd);
+  --event-primary-50p-color: var(--event-primary-50p-color-override, #8753dd80);
+  --event-background-color: var(--event-background-color-override, #cebdff66);
+  --event-background-10p-color: var(
+    --event-background-10p-color-override,
+    #cebdff19
+  );
+  --event-border-color: var(--event-border-color-override, #a88aff);
+
+  --condition-primary-color: var(--condition-primary-color-override, #00c48c);
+  --condition-primary-50p-color: var(
+    --condition-primary-50p-color-override,
+    #00c48c80
+  );
+  --condition-background-color: var(
+    --condition-background-color-override,
+    #96ffe166
+  );
+  --condition-background-10p-color: var(
+    --condition-background-10p-color-override,
+    #96ffe119
+  );
+  --condition-border-color: var(--condition-border-color-override, #2effc3);
+
+  --expectation-primary-color: var(
+    --expectation-primary-color-override,
+    #fe8799
+  );
+  --expectation-primary-50p-color: var(
+    --expectation-primary-50p-color-override,
+    #fe879980
+  );
+  --expectation-background-color: var(
+    --expectation-background-color-override,
+    #ffcbd366
+  );
+  --expectation-background-10p-color: var(
+    --expectation-background-10p-color-override,
+    #ffcbd319
+  );
+  --expectation-border-color: var(--expectation-border-color-override, #ff98a8);
+}
+
 .flowGraph .sizing {
   position: absolute;
   pointer-events: none;

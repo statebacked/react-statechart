@@ -1,30 +1,30 @@
-import { models } from "../schema";
+import * as schema from "../schema";
 import * as z from "zod";
 
 export const flowItemSchema = z.discriminatedUnion("flowItemType", [
   z.object({
     flowItemType: z.literal("state"),
-    flowItemId: models.stateIdSchema,
+    flowItemId: schema.stateIdSchema,
     flowItemName: z.string(),
   }),
   z.object({
     flowItemType: z.literal("event"),
-    flowItemId: models.eventIdSchema,
+    flowItemId: schema.eventIdSchema,
     flowItemName: z.string(),
   }),
   z.object({
     flowItemType: z.literal("condition"),
-    flowItemId: models.conditionIdSchema,
+    flowItemId: schema.conditionIdSchema,
     flowItemName: z.string(),
   }),
   z.object({
     flowItemType: z.literal("action"),
-    flowItemId: models.actionIdSchema,
+    flowItemId: schema.actionIdSchema,
     flowItemName: z.string(),
   }),
   z.object({
     flowItemType: z.literal("assertion"),
-    flowItemId: models.assertionIdSchema,
+    flowItemId: schema.assertionIdSchema,
     flowItemName: z.string(),
   }),
 ]);
@@ -32,7 +32,7 @@ export const flowItemSchema = z.discriminatedUnion("flowItemType", [
 export type FlowItem = z.infer<typeof flowItemSchema>;
 
 export const requirementAndFlowItemsSchema = z.object({
-  requirement: models.requirementSchema.extend({
+  requirement: schema.requirementSchema.extend({
     flowName: z.string().optional(),
   }),
   flowItems: z.array(flowItemSchema),
@@ -50,7 +50,7 @@ type PickFlowItemIdentifier<T> = T extends {
   : never;
 export type FlowItemIdentifier = PickFlowItemIdentifier<FlowItem>;
 
-export const drawableFlowSchema = models.flowSchema
+export const drawableFlowSchema = schema.flowSchema
   .pick({
     id: true,
     assertions: true,
@@ -62,7 +62,7 @@ export const drawableFlowSchema = models.flowSchema
     transitions: true,
   })
   .extend({
-    name: models.flowSchema.shape.name.optional(),
+    name: schema.flowSchema.shape.name.optional(),
     requirements: z.array(requirementAndFlowItemsSchema),
   });
 
@@ -160,8 +160,8 @@ export const containsFlowItem = (
 export const transitionRelevantToFlowItems = (
   flow: DrawableFlow,
   flowItems: Array<FlowItemIdentifier>,
-  sourceStateId: models.StateId,
-  transition: models.Flow["transitions"][any]
+  sourceStateId: schema.StateId,
+  transition: schema.Flow["transitions"][any]
 ) =>
   transition.event
     ? directlyReferencedFlowItem(flow, flowItems, {

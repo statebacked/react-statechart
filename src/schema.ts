@@ -1,5 +1,10 @@
 import * as z from "zod";
-import * as ids from "./ids";
+
+export const flowIdSchema = z.string().brand("FlowId");
+export type FlowId = z.infer<typeof flowIdSchema>;
+
+export const requirementIdSchema = z.string().brand("RequirementId");
+export type RequirementId = z.infer<typeof requirementIdSchema>;
 
 export const stateIdSchema = z.string().brand<"stateId">();
 export type StateId = z.infer<typeof stateIdSchema>;
@@ -59,7 +64,7 @@ const stateSchema = basicFlowItemSchema.extend({
 
 export const flowSchema = z
   .object({
-    id: ids.flowSchema,
+    id: flowIdSchema,
     name: z.string().transform((name) => {
       if (name.length > 200) {
         console.warn("flow name too long", { name });
@@ -131,8 +136,8 @@ function testFlowItemRefCoversFlowItemType() {
 }
 
 export const requirementSchema = z.object({
-  id: ids.requirementSchema,
-  flowId: ids.flowSchema,
+  id: requirementIdSchema,
+  flowId: flowIdSchema,
   text: z.string(),
 });
 

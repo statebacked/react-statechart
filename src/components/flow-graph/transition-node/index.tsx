@@ -1,4 +1,4 @@
-import { models } from "../../../schema";
+import * as schema from "../../../schema";
 import { useCallback } from "react";
 import {
   getTransitionPositionId,
@@ -30,9 +30,9 @@ export const TransitionNode = ({
   editable,
 }: {
   flow: DrawableFlow;
-  sourceStateId: models.StateId;
+  sourceStateId: schema.StateId;
   transitionIdx: number;
-  transition: NonNullable<models.Flow["transitions"][any]>;
+  transition: NonNullable<schema.Flow["transitions"][any]>;
   positions: Map<PositionedItemId, { x: number; y: number }>;
   selectedItems: Array<FlowItemIdentifier>;
   onReportSize?: (
@@ -128,7 +128,7 @@ export const TransitionNode = ({
                     event: {
                       id:
                         transition.event ??
-                        (flows.freshFlowItemId() as models.EventId),
+                        (flows.freshFlowItemId() as schema.EventId),
                       name,
                     },
                   }

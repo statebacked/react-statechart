@@ -1,4 +1,4 @@
-import { models } from "../../../schema";
+import * as schema from "../../../schema";
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import {
   getStatePositionId,
@@ -33,7 +33,7 @@ type State = {
   position?: Position;
 };
 
-const newStateId = "__new__" as models.StateId;
+const newStateId = "__new__" as schema.StateId;
 
 export const StateNode = ({
   flow,
@@ -47,8 +47,8 @@ export const StateNode = ({
   editable,
 }: {
   flow: DrawableFlow;
-  stateId: models.StateId;
-  state: NonNullable<models.Flow["states"][any]>;
+  stateId: schema.StateId;
+  state: NonNullable<schema.Flow["states"][any]>;
   positions: Map<PositionedItemId, PositionInfo>;
   selectedItems: Array<FlowItemIdentifier>;
   isTopLevel?: boolean;
@@ -173,7 +173,7 @@ export const StateNode = ({
                     items={editable.getAvailableStates().concat([
                       { id: newStateId, name: "Create a new state" },
                       {
-                        id: undefined as any as models.StateId,
+                        id: undefined as any as schema.StateId,
                         name: `Select a ${flowItemTypePresentation.state.title}`,
                       },
                     ])}
@@ -188,7 +188,7 @@ export const StateNode = ({
 
                       editable.onUpdateTransitionTarget(
                         stateId,
-                        id as models.StateId
+                        id as schema.StateId
                       );
                     }}
                   >
@@ -236,7 +236,7 @@ export const StateNode = ({
                 positions={positions}
                 selectedItems={selectedItems}
                 state={childState!}
-                stateId={childId as models.StateId}
+                stateId={childId as schema.StateId}
                 transitionsByPosId={transitionsByPosId}
                 editable={editable}
               />

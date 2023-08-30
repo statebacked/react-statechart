@@ -1,4 +1,4 @@
-import { models } from "../../../schema";
+import * as schema from "../../../schema";
 import { FlowItemIdentifier, DrawableFlow } from "../../../flow-utils";
 import {
   PositionedItemId,
@@ -12,7 +12,7 @@ import { Editable } from "../types";
 export type Transition = DrawableFlow["transitions"][number];
 export type TransitionInfo = {
   transition: Transition;
-  sourceState: models.StateId;
+  sourceState: schema.StateId;
   transitionIdx: number;
 };
 
@@ -26,12 +26,12 @@ export const TransitionsView = ({
   initialState,
   editable,
 }: {
-  containerStateId: models.StateId;
+  containerStateId: schema.StateId;
   positions: Map<PositionedItemId, PositionInfo>;
   transitionsByPosId: Map<PositionedItemId, TransitionInfo>;
   flow: DrawableFlow;
   selectedItems: Array<FlowItemIdentifier>;
-  initialState?: models.StateId;
+  initialState?: schema.StateId;
   onReportSize?: (positionId: PositionedItemId, size: Size) => void;
   editable?: Editable;
 }) => {

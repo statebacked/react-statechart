@@ -11,7 +11,7 @@ import { IconButton } from "../../icon-button";
 import { useModal } from "../../../hooks/use-modal";
 import { Popup, PopupWrapper } from "../../popup";
 import { flowItemTypePresentation, freshFlowItemId } from "../../../data/flows";
-import { models } from "../../../schema";
+import * as schema from "../../../schema";
 import { EditableOnClick } from "../../editable-on-click";
 
 const newItemId = "";
@@ -26,8 +26,8 @@ export const FlowItemList = ({
   items: Array<FlowItemIdentifier>;
   nonEmptyClassName?: string;
   editable?: {
-    eligibleTypes: Array<models.FlowItemType>;
-    typeLabelOverride?: Partial<Record<models.FlowItemType, string>>;
+    eligibleTypes: Array<schema.FlowItemType>;
+    typeLabelOverride?: Partial<Record<schema.FlowItemType, string>>;
     onUpsertItem: (item: FlowItem) => void;
     onDeleteItem: (itemId: FlowItemIdentifier) => void;
   };
@@ -118,9 +118,9 @@ const AddListItem = ({
   eligibleTypes,
   typeLabelOverride,
 }: {
-  onAddItem: (type: models.FlowItemType) => void;
-  eligibleTypes: Array<models.FlowItemType>;
-  typeLabelOverride: Partial<Record<models.FlowItemType, string>>;
+  onAddItem: (type: schema.FlowItemType) => void;
+  eligibleTypes: Array<schema.FlowItemType>;
+  typeLabelOverride: Partial<Record<schema.FlowItemType, string>>;
 }) => {
   const { open, onOpen, onClose } = useModal();
 

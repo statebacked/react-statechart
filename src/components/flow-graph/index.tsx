@@ -15,7 +15,7 @@ import {
   toLayoutMap,
 } from "../../transformers/elk";
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
-import { ids, models } from "../../schema";
+import * as schema from "../../schema";
 import { debounceWithLimit } from "../../debounce-utils";
 import { usePanAndZoom } from "./use-pan-and-zoom";
 import { TransitionNode } from "./transition-node";
@@ -40,11 +40,11 @@ const nextLayoutId = (() => {
 
 type Layout = Map<PositionedItemId, PositionInfo>;
 
-type State = null | { layout: Layout; layoutId: number; flowId: ids.FlowId };
+type State = null | { layout: Layout; layoutId: number; flowId: schema.FlowId };
 type Action =
   | {
       type: "received-layout";
-      flowId: ids.FlowId;
+      flowId: schema.FlowId;
       layout: EnrichedElkNode;
       layoutId: number;
     }
@@ -54,56 +54,56 @@ export type FlowGraphProps = {
   flow: DrawableFlow;
   selectedItems: Array<FlowItemIdentifier>;
   editable?: {
-    getAvailableStates: () => Array<{ id: models.StateId; name: string }>;
+    getAvailableStates: () => Array<{ id: schema.StateId; name: string }>;
     onUpdateTransitionTarget: (
-      previousTargetId: models.StateId,
-      newTargetId: models.StateId
+      previousTargetId: schema.StateId,
+      newTargetId: schema.StateId
     ) => void;
     onUpdateState: (
-      stateId: models.StateId | null,
-      state: DrawableFlow["states"][models.StateId]
+      stateId: schema.StateId | null,
+      state: DrawableFlow["states"][schema.StateId]
     ) => void;
-    onRemoveState: (stateId: models.StateId) => void;
-    onUpsertStateItem: (stateId: models.StateId | null, item: FlowItem) => void;
+    onRemoveState: (stateId: schema.StateId) => void;
+    onUpsertStateItem: (stateId: schema.StateId | null, item: FlowItem) => void;
     onDeleteStateItem: (
-      stateId: models.StateId | null,
+      stateId: schema.StateId | null,
       itemId: FlowItemIdentifier
     ) => void;
-    onAddTransition: (sourceState: models.StateId | undefined) => void;
+    onAddTransition: (sourceState: schema.StateId | undefined) => void;
     onUpdateTransition: (
-      sourceState: models.StateId | undefined,
-      targetState: models.StateId | undefined,
-      event: models.EventId | undefined,
-      condition: models.ConditionId | undefined,
+      sourceState: schema.StateId | undefined,
+      targetState: schema.StateId | undefined,
+      event: schema.EventId | undefined,
+      condition: schema.ConditionId | undefined,
       updated: {
         event?: {
-          id: models.EventId;
+          id: schema.EventId;
           name: string;
         };
         condition?: {
-          id: models.ConditionId;
+          id: schema.ConditionId;
           name: string;
         };
       }
     ) => void;
     onDeleteTransition: (
-      sourceState: models.StateId | undefined,
-      targetState: models.StateId | undefined,
-      event: models.EventId | undefined,
-      condition: models.ConditionId | undefined
+      sourceState: schema.StateId | undefined,
+      targetState: schema.StateId | undefined,
+      event: schema.EventId | undefined,
+      condition: schema.ConditionId | undefined
     ) => void;
     onUpsertTransitionItem: (
-      sourceState: models.StateId | undefined,
-      targetState: models.StateId | undefined,
-      event: models.EventId | undefined,
-      condition: models.ConditionId | undefined,
+      sourceState: schema.StateId | undefined,
+      targetState: schema.StateId | undefined,
+      event: schema.EventId | undefined,
+      condition: schema.ConditionId | undefined,
       item: FlowItem
     ) => void;
     onDeleteTransitionItem: (
-      sourceState: models.StateId | undefined,
-      targetState: models.StateId | undefined,
-      event: models.EventId | undefined,
-      condition: models.ConditionId | undefined,
+      sourceState: schema.StateId | undefined,
+      targetState: schema.StateId | undefined,
+      event: schema.EventId | undefined,
+      condition: schema.ConditionId | undefined,
       itemId: FlowItemIdentifier
     ) => void;
   };
@@ -115,9 +115,9 @@ export type FlowGraphProps = {
   }) => React.ReactNode;
 };
 
-const rootId = "root" as models.StateId;
+const rootId = "root" as schema.StateId;
 const rootPosId = getStatePositionId(rootId);
-const flowStateId = "flow" as models.StateId;
+const flowStateId = "flow" as schema.StateId;
 
 export const FlowGraph = ({
   flow,
@@ -194,7 +194,7 @@ export const FlowGraph = ({
   );
 
   const onUpdateLayout = useCallback(
-    debounceWithLimit(100, 5000, (flowId: ids.FlowId) => {
+    debounceWithLimit(100, 5000, (flowId: schema.FlowId) => {
       if (isSizingRendering()) {
         return;
       }
@@ -247,7 +247,7 @@ export const FlowGraph = ({
       state?.transitions.map((transition, transitionIdx) => ({
         transition,
         transitionIdx,
-        sourceState: sourceState as models.StateId,
+        sourceState: sourceState as schema.StateId,
       })) ?? []
   );
   const transitionsByPosId = new Map(
@@ -282,23 +282,23 @@ export const FlowGraph = ({
             itemId
           );
         },
-        onAddTransition: (sourceState: models.StateId | undefined) => {
+        onAddTransition: (sourceState: schema.StateId | undefined) => {
           editable.onAddTransition(
             sourceState === flowStateId ? undefined : sourceState
           );
         },
         onUpdateTransition: (
-          sourceState: models.StateId | undefined,
-          targetState: models.StateId | undefined,
-          event: models.EventId | undefined,
-          condition: models.ConditionId | undefined,
+          sourceState: schema.StateId | undefined,
+          targetState: schema.StateId | undefined,
+          event: schema.EventId | undefined,
+          condition: schema.ConditionId | undefined,
           updated: {
             event?: {
-              id: models.EventId;
+              id: schema.EventId;
               name: string;
             };
             condition?: {
-              id: models.ConditionId;
+              id: schema.ConditionId;
               name: string;
             };
           }
@@ -312,10 +312,10 @@ export const FlowGraph = ({
           );
         },
         onDeleteTransition: (
-          sourceState: models.StateId | undefined,
-          targetState: models.StateId | undefined,
-          event: models.EventId | undefined,
-          condition: models.ConditionId | undefined
+          sourceState: schema.StateId | undefined,
+          targetState: schema.StateId | undefined,
+          event: schema.EventId | undefined,
+          condition: schema.ConditionId | undefined
         ) => {
           editable.onDeleteTransition(
             sourceState === flowStateId ? undefined : sourceState,
@@ -370,7 +370,7 @@ export const FlowGraph = ({
               positions={new Map()}
               onReportSize={onReportSize}
               flow={fullFlow}
-              stateId={stateId as models.StateId}
+              stateId={stateId as schema.StateId}
               state={state!}
               selectedItems={selectedItems}
               transitionsByPosId={transitionsByPosId}
@@ -419,7 +419,7 @@ export const FlowGraph = ({
               isTopLevel
               positions={positions}
               flow={fullFlow}
-              stateId={stateId as models.StateId}
+              stateId={stateId as schema.StateId}
               state={state!}
               selectedItems={selectedItems}
               transitionsByPosId={transitionsByPosId}

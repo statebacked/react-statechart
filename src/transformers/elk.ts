@@ -1,13 +1,13 @@
-import { models } from "../schema";
+import * as schema from "../schema";
 import { ElkExtendedEdge, ElkNode } from "elkjs";
 import { DrawableFlow } from "../flow-utils";
 
 type EnrichedElkEdge = ElkExtendedEdge & {
   data: {
     transitionId: PositionedItemId;
-    source: models.StateId;
-    target: models.StateId;
-    container?: models.StateId;
+    source: schema.StateId;
+    target: schema.StateId;
+    container?: schema.StateId;
   };
 };
 export type EnrichedElkNode = ElkNode & {
@@ -39,13 +39,13 @@ const nodeLayoutOptions = {
 
 export type PositionedItemId = string & { _BRAND: "positionedItem" };
 
-export const getStatePositionId = (stateId: models.StateId) =>
+export const getStatePositionId = (stateId: schema.StateId) =>
   `state:${stateId}` as PositionedItemId;
 
 export const getTransitionPositionId = (
-  sourceStateId: models.StateId,
+  sourceStateId: schema.StateId,
   transitionIdx: number,
-  targetStateId: models.StateId | undefined
+  targetStateId: schema.StateId | undefined
 ) =>
   `transition:${sourceStateId}:${transitionIdx}:${
     targetStateId ?? sourceStateId
@@ -54,7 +54,7 @@ export const getTransitionPositionId = (
 export type Connector = {
   targetIsEvent: boolean;
   sourceIsEvent: boolean;
-  container: models.StateId;
+  container: schema.StateId;
   transitionId: PositionedItemId;
   points: Array<{ x: number; y: number }>;
 };
@@ -124,20 +124,20 @@ export const toLayoutMap = (
   return map;
 };
 
-type EdgeIdsByTarget = Map<models.StateId, Array<PositionedItemId>>;
+type EdgeIdsByTarget = Map<schema.StateId, Array<PositionedItemId>>;
 
 const getEdgeIdsByTarget = (
   states: DrawableFlow["states"]
 ): EdgeIdsByTarget => {
-  const map = new Map<models.StateId, Set<PositionedItemId>>();
+  const map = new Map<schema.StateId, Set<PositionedItemId>>();
   for (const [stateId, state] of Object.entries(states)) {
     const len = state?.transitions.length ?? 0;
     for (let i = 0; i < len; ++i) {
       const transition = state!.transitions[i];
-      const target = transition.target ?? (stateId as models.StateId);
+      const target = transition.target ?? (stateId as schema.StateId);
 
       const posId = getTransitionPositionId(
-        stateId as models.StateId,
+        stateId as schema.StateId,
         i,
         target
       );
@@ -167,7 +167,7 @@ export type Size = {
 
 export function flowToElkGraph(
   sizeMap: Map<PositionedItemId, Size>,
-  rootId: models.StateId,
+  rootId: schema.StateId,
   flow: DrawableFlowWithTopLevelState
 ): EnrichedElkNode {
   const edgeIdsByTarget = getEdgeIdsByTarget(flow.states);
@@ -182,8 +182,8 @@ export function flowToElkGraph(
 }
 
 export const getFullFlow = (
-  rootId: models.StateId,
-  flowStateId: models.StateId,
+  rootId: schema.StateId,
+  flowStateId: schema.StateId,
   flow: DrawableFlow
 ): DrawableFlowWithTopLevelState => {
   const statesWithParent = Object.entries(flow.states).reduce(
@@ -213,7 +213,7 @@ export const getFullFlow = (
 };
 
 const createRootFlowState = (
-  rootId: models.StateId,
+  rootId: schema.StateId,
   flow: DrawableFlow
 ): DrawableFlow["states"][any] => ({
   parent: rootId,
@@ -229,14 +229,14 @@ const createRootFlowState = (
 
 export function _flowToElkGraph(
   sizeMap: Map<PositionedItemId, Size>,
-  rootId: models.StateId,
+  rootId: schema.StateId,
   edgeIdsByTarget: EdgeIdsByTarget,
   states: DrawableFlow["states"],
-  stateId: models.StateId
+  stateId: schema.StateId
 ): [EnrichedElkNode, Set<string>] {
   const childNodes = Object.entries(states)
     .filter(([_stateId, state]) => state!.parent === stateId)
-    .map(([stateId, state]) => stateId as models.StateId);
+    .map(([stateId, state]) => stateId as schema.StateId);
 
   const isLeaf = childNodes.length == 0;
   const state = states[stateId];
@@ -401,7 +401,7 @@ export function _flowToElkGraph(
 }
 
 const edgesWithContainer = (
-  container: models.StateId,
+  container: schema.StateId,
   edges: Array<EnrichedElkEdge>
 ): Array<EnrichedElkEdge> =>
   edges.map((edge) => ({
@@ -412,7 +412,7 @@ const edgesWithContainer = (
 // Extract a sequence of edges from a SimplyStated state
 export function edgesFromState(
   sizeMap: Map<PositionedItemId, { width: number; height: number }>,
-  stateId: models.StateId,
+  stateId: schema.StateId,
   state: NonNullable<DrawableFlow["states"][any]>,
   states: NonNullable<DrawableFlow["states"]>
 ): EnrichedElkEdge[] {
@@ -420,7 +420,7 @@ export function edgesFromState(
   const isFromInitialEdge = parent?.initialState === stateId;
 
   return state.transitions.flatMap((transition, idx): EnrichedElkEdge[] => {
-    const target = transition.target ?? (stateId as models.StateId);
+    const target = transition.target ?? (stateId as schema.StateId);
     const transitionId = getTransitionPositionId(stateId, idx, target);
 
     const isSelfEdge = stateId === target;

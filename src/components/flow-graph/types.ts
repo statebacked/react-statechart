@@ -1,58 +1,58 @@
-import { models } from "../../schema";
+import * as schema from "../../schema";
 import { FlowItem } from "../../transformers/types";
 import { DrawableFlow, FlowItemIdentifier } from "../../flow-utils";
 
 export type Editable = {
-  getAvailableStates: () => Array<{ id: models.StateId; name: string }>;
+  getAvailableStates: () => Array<{ id: schema.StateId; name: string }>;
   onUpdateState: (
-    stateId: models.StateId,
-    state: DrawableFlow["states"][models.StateId]
+    stateId: schema.StateId,
+    state: DrawableFlow["states"][schema.StateId]
   ) => void;
-  onUpsertStateItem: (stateId: models.StateId, item: FlowItem) => void;
-  onRemoveState: (stateId: models.StateId) => void;
+  onUpsertStateItem: (stateId: schema.StateId, item: FlowItem) => void;
+  onRemoveState: (stateId: schema.StateId) => void;
   onDeleteStateItem: (
-    stateId: models.StateId,
+    stateId: schema.StateId,
     itemId: FlowItemIdentifier
   ) => void;
   onUpdateTransitionTarget: (
-    previousTargetId: models.StateId,
-    newTargetId: models.StateId
+    previousTargetId: schema.StateId,
+    newTargetId: schema.StateId
   ) => void;
-  onAddTransition: (sourceState: models.StateId | undefined) => void;
+  onAddTransition: (sourceState: schema.StateId | undefined) => void;
   onUpdateTransition: (
-    sourceState: models.StateId | undefined,
-    targetState: models.StateId | undefined,
-    event: models.EventId | undefined,
-    condition: models.ConditionId | undefined,
+    sourceState: schema.StateId | undefined,
+    targetState: schema.StateId | undefined,
+    event: schema.EventId | undefined,
+    condition: schema.ConditionId | undefined,
     updated: {
       event?: {
-        id: models.EventId;
+        id: schema.EventId;
         name: string;
       };
       condition?: {
-        id: models.ConditionId;
+        id: schema.ConditionId;
         name: string;
       };
     }
   ) => void;
   onDeleteTransition: (
-    sourceState: models.StateId | undefined,
-    targetState: models.StateId | undefined,
-    event: models.EventId | undefined,
-    condition: models.ConditionId | undefined
+    sourceState: schema.StateId | undefined,
+    targetState: schema.StateId | undefined,
+    event: schema.EventId | undefined,
+    condition: schema.ConditionId | undefined
   ) => void;
   onUpsertTransitionItem: (
-    sourceState: models.StateId | undefined,
-    targetState: models.StateId | undefined,
-    event: models.EventId | undefined,
-    condition: models.ConditionId | undefined,
+    sourceState: schema.StateId | undefined,
+    targetState: schema.StateId | undefined,
+    event: schema.EventId | undefined,
+    condition: schema.ConditionId | undefined,
     item: FlowItem
   ) => void;
   onDeleteTransitionItem: (
-    sourceState: models.StateId | undefined,
-    targetState: models.StateId | undefined,
-    event: models.EventId | undefined,
-    condition: models.ConditionId | undefined,
+    sourceState: schema.StateId | undefined,
+    targetState: schema.StateId | undefined,
+    event: schema.EventId | undefined,
+    condition: schema.ConditionId | undefined,
     itemId: FlowItemIdentifier
   ) => void;
 };

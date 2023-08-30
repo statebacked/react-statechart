@@ -1,33 +1,33 @@
-import { models } from "../schema";
+import * as schema from "../schema";
 
 export type FlowItem =
   | {
       flowItemType: "state";
-      flowItemId: models.StateId;
+      flowItemId: schema.StateId;
       flowItemName: string;
     }
   | {
       flowItemType: "event";
-      flowItemId: models.EventId;
+      flowItemId: schema.EventId;
       flowItemName: string;
     }
   | {
       flowItemType: "condition";
-      flowItemId: models.ConditionId;
+      flowItemId: schema.ConditionId;
       flowItemName: string;
     }
   | {
       flowItemType: "action";
-      flowItemId: models.ActionId;
+      flowItemId: schema.ActionId;
       flowItemName: string;
     }
   | {
       flowItemType: "assertion";
-      flowItemId: models.AssertionId;
+      flowItemId: schema.AssertionId;
       flowItemName: string;
     };
 
 export type RequirementAndFlowItems = {
-  requirement: models.Requirement & { flowName?: string };
+  requirement: schema.Requirement & { flowName?: string };
   flowItems: Array<FlowItem>;
 };

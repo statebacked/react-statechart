@@ -1,10 +1,9 @@
-import { ReactElement } from "react";
 import { v4 } from "uuid";
-import { models } from "../schema";
+import * as schema from "../schema";
 import { DrawableFlow } from "../flow-utils";
 
 export const flowItemTypePresentation: Record<
-  models.FlowItemType,
+  schema.FlowItemType,
   {
     title: string;
     groupTitle: string;
