@@ -44,7 +44,7 @@ export const usePanAndZoom = (rootPos: Size | undefined) => {
         case "reset":
           return sizeToFit(rootPos, state.containerSize);
         case "discrete-zoom":
-          return clamp(rootPos, {
+          return clamp(rootPos, state.containerSize, {
             ...state,
             zoom: state.zoom + (action.direction === "in" ? 1 : -1) * 0.3,
           });
@@ -53,7 +53,7 @@ export const usePanAndZoom = (rootPos: Size | undefined) => {
             return state;
           }
 
-          return clamp(rootPos, {
+          return clamp(rootPos, state.containerSize, {
             ...state,
             dx: state.dx + action.movementX / state.zoom,
             dy: state.dy + action.movementY / state.zoom,
@@ -75,12 +75,12 @@ export const usePanAndZoom = (rootPos: Size | undefined) => {
         case "wheel": {
           if (action.controlPressed) {
             const delta = Math.max(-1, Math.min(1, action.deltaY));
-            return clamp(rootPos, {
+            return clamp(rootPos, state.containerSize, {
               ...state,
               zoom: state.zoom - delta / 20,
             });
           } else {
-            return clamp(rootPos, {
+            return clamp(rootPos, state.containerSize, {
               ...state,
               dx: state.dx - action.deltaX,
               dy: state.dy - action.deltaY,
@@ -195,15 +195,25 @@ export const usePanAndZoom = (rootPos: Size | undefined) => {
   };
 };
 
-const clamp = (rootPos: Size | undefined, proposed: ZoomState): ZoomState => {
-  const maxDy = (rootPos?.height ?? 1000) / proposed.zoom;
-  const maxDx = (rootPos?.width ?? 750) / proposed.zoom;
+const clamp = (
+  rootPos: Size | undefined,
+  containerSize: Size | undefined,
+  proposed: ZoomState
+): ZoomState => {
+  const maxDy = (containerSize?.height ?? 1000) / proposed.zoom;
+  const maxDx = (containerSize?.width ?? 750) / proposed.zoom;
 
   return {
     ...proposed,
     zoom: clampZoom(proposed.zoom),
-    dx: Math.max(Math.min(proposed.dx, maxDx), -maxDx),
-    dy: Math.max(Math.min(proposed.dy, maxDy), -maxDy),
+    dx: Math.max(
+      Math.min(proposed.dx, maxDx),
+      -(rootPos?.width ?? 0) / proposed.zoom
+    ),
+    dy: Math.max(
+      Math.min(proposed.dy, maxDy),
+      -(rootPos?.height ?? 0) / proposed.zoom
+    ),
   };
 };
 
@@ -225,7 +235,7 @@ const sizeToFit = (
 
   const zoom = clampZoom(Math.min(widthZoom, heightZoom));
 
-  return clamp(rootPos, {
+  return clamp(rootPos, containerSize, {
     zoom,
     dx: (containerSize.width - rootPos.width * zoom) / 2 / zoom,
     dy: (containerSize.height - rootPos.height * zoom) / 2 / zoom,
