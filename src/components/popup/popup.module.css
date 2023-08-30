@@ -1,0 +1,22 @@
+.popupWrapper {
+  display: inline;
+  position: relative;
+}
+
+.container {
+  position: absolute;
+  overflow: visible;
+  width: 100%;
+  pointer-events: none;
+}
+
+.popup {
+  padding: 20px;
+  background: var(--popup-background-color);
+  border: 1px solid var(--popup-border-color);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  position: absolute;
+  z-index: 3;
+  pointer-events: all;
+}

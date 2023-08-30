@@ -1,0 +1,59 @@
+.flowItemList {
+  margin: 0;
+  padding-inline-start: 0;
+}
+
+.flowItemListItem {
+  text-align: left;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 3px;
+  max-width: 500px;
+}
+
+.iconContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 24px;
+}
+
+.flowItemIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.addItemPopup {
+  top: 100%;
+  width: max-content;
+  transform: scale(var(--inverse-zoom));
+  transform-origin: 0 0;
+}
+
+.addItemMenuItem {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  align-items: center;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.addItemMenuItem:not(:last-child) {
+  border-bottom: 1px solid var(--select-divider-color);
+}
+
+.editableName {
+  width: 100%;
+  height: auto;
+  min-height: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+input.editableName {
+  cursor: text;
+}

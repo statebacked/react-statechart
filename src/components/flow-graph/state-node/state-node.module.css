@@ -1,0 +1,118 @@
+.stateNode {
+  position: absolute;
+  box-shadow: 0px 1px 4px rgba(135, 83, 221, 0.08);
+  display: inline-block;
+  margin-inline: 0;
+  margin: 0;
+  background-color: var(--state-background-10p-color);
+  border: 1px solid var(--state-border-color);
+  z-index: 1;
+}
+
+.stateNode.topLevel {
+  background-color: unset;
+  border-color: var(--top-level-node-border-color);
+}
+
+.stateNode.topLevel > .stateNodeContent > .stateContent.hasChildren::after {
+  border-color: var(--top-level-node-border-color);
+}
+
+.stateNode.sizing {
+  position: static;
+  opacity: 0.001;
+  /* there is no good explanation but it's better for the non-sizing rendering
+     to be too big than too small and sometimes it is measured .01px too small */
+  padding: 0.5px;
+}
+
+.selected {
+  box-shadow: var(--state-primary-50p-color) 0px 0px 8px 8px;
+}
+
+.stateNodeContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.stateContent {
+  padding: 24px 22px;
+  position: relative;
+}
+
+.stateContent.hasChildren::after {
+  content: " ";
+  border-bottom: 1px solid var(--state-border-color);
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 0;
+  height: 1px;
+}
+
+.stateNodeContent header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  margin: auto;
+}
+
+.stateNodeContent header > h2 {
+  margin-left: 3px;
+  display: inline-block;
+  text-align: left;
+}
+
+.sizing .childStatesContainer {
+  flex: 1;
+  position: relative;
+}
+
+.childStatesContainer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.name {
+  font-size: 1.2em;
+  width: 100%;
+}
+
+.nonEmptyFlowListItems {
+  border-top: 1px solid var(--state-border-color);
+  padding-top: 12px;
+}
+
+.nonEmptyFlowListItemsWithChildren {
+  border-top: 1px solid var(--state-border-color);
+  padding-top: 24px; /* has to match the implied bottom padding */
+}
+
+.editable {
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  outline: none;
+  padding: 0;
+  border-radius: 4px;
+}
+
+input.editable {
+  cursor: text;
+}
+
+.deleteButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  z-index: 1;
+}

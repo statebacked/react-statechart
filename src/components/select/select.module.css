@@ -1,0 +1,64 @@
+.selectContainer {
+  position: relative;
+  flex: 1;
+}
+
+.select {
+  padding-right: 40px;
+  border: 1px solid var(--select-divider-color);
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  overflow: visible;
+}
+
+.select::after {
+  content: " ";
+  background: url(./chevron-down.svg) center no-repeat;
+  background-size: 24px 24px;
+  position: absolute;
+  right: 20px;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  height: 100%;
+  pointer-events: none;
+}
+
+.optionsContainer {
+  position: absolute;
+  background-color: var(--select-background-color);
+  overflow-y: auto;
+  max-height: 350px;
+  transition: height 200ms;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.optionsContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.optionsContainer.closed {
+  height: 0;
+}
+
+.optionsContainer.open {
+  height: auto;
+  border: 1px solid var(--select-divider-color);
+  border-top: none;
+}
+
+.option {
+  padding: 12px;
+  border-bottom: 1px solid var(--select-divider-color);
+  cursor: pointer;
+}
+
+.option:first-child {
+  border-top: 1px solid var(--select-divider-color);
+}
+
+.option:hover {
+  background-color: var(--select-hover-background-color);
+}

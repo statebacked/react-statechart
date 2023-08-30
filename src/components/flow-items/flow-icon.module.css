@@ -1,0 +1,92 @@
+.flowItemIcon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 4px;
+  background-size: contain;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+}
+
+.action {
+  composes: flowItemIcon;
+  background-color: var(--action-background-color);
+  border: 1px solid var(--action-border-color);
+  background-image: url(./action.svg);
+}
+
+.action.filled {
+  background-image: url(./action-filled.svg);
+}
+
+.action.transparent {
+  background-color: transparent;
+  border: none;
+}
+
+.assertion {
+  composes: flowItemIcon;
+  background-color: var(--expectation-background-color);
+  border: 1px solid var(--expectation-border-color);
+  background-image: url(./assertion.svg);
+}
+
+.assertion.filled {
+  background-image: url(./assertion.svg);
+}
+
+.assertion.transparent {
+  background-color: transparent;
+  border: none;
+}
+
+.condition {
+  composes: flowItemIcon;
+  background-color: var(--condition-background-color);
+  border: 1px solid var(--condition-border-color);
+  background-image: url(./condition.svg);
+}
+
+.condition.filled {
+  background-image: url(./condition-filled.svg);
+}
+
+.condition.transparent {
+  background-color: transparent;
+  border: none;
+}
+
+.event {
+  composes: flowItemIcon;
+  background-color: var(--event-background-color);
+  border: 1px solid var(--event-border-color);
+  background-image: url(./event.svg);
+}
+
+.event.filled {
+  background-image: url(./event-filled.svg);
+}
+
+.event.transparent {
+  background-color: transparent;
+  border: none;
+}
+
+.state {
+  composes: flowItemIcon;
+  background-color: var(--state-background-color);
+  border: 1px solid var(--state-border-color);
+  background-image: url(./state.svg);
+}
+
+.state.filled {
+  background-image: url(./state-filled.svg);
+}
+
+.state.transparent {
+  background-color: transparent;
+  border: none;
+}

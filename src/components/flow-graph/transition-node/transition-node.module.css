@@ -1,0 +1,90 @@
+.transitionNode {
+  position: absolute;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
+  padding: 22px 24px;
+  display: inline-block;
+  margin-inline: 0;
+  margin: 0;
+  background-color: var(--event-background-10p-color);
+  border: 1px solid var(--event-border-color);
+  border-radius: 4px;
+  max-width: 500px;
+}
+
+.transitionNode.sizing {
+  position: static;
+  opacity: 0.001;
+  /* there is no good explanation but it's better for the non-sizing rendering
+     to be too big than too small and sometimes it is measured .01px too small */
+  padding: 22.5px 24.5px;
+}
+
+.selected {
+  box-shadow: var(--event-primary-50p-color) 0px 0px 8px 8px;
+}
+
+.transitionNode header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  margin: auto;
+}
+
+.transitionNode header > h2 {
+  margin-left: 3px;
+  display: inline-block;
+  text-align: left;
+}
+
+.name {
+  font-size: 1.2em;
+}
+
+.actions,
+.condition {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+
+.entryActions::before {
+  content: "ACTIONS / ";
+  color: #dcdcdc;
+}
+
+.condition::before {
+  content: "IF / ";
+  color: #dcdcdc;
+}
+
+.nonEmptyFlowListItems {
+  border-top: 1px solid var(--event-border-color);
+  padding-top: 12px;
+}
+
+.editable {
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  outline: none;
+  padding: 0;
+  border-radius: 4px;
+}
+
+input.editable {
+  cursor: text;
+  max-width: calc(100% - 20px);
+  margin: 0;
+}
+
+.deleteButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
