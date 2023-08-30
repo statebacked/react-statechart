@@ -227,7 +227,11 @@ export const StateNode = ({
           />
         </div>
         {childStates.length > 0 ? (
-          <div className={styles.childStatesContainer}>
+          <div
+            className={`${styles.childStatesContainer} ${
+              state.type === "parallel" ? styles.parallel : ""
+            }`}
+          >
             {childStates.map(([childId, childState]) => (
               <StateNode
                 key={childId}

@@ -52,7 +52,7 @@ const transitionSchema = z.object({
 
 const stateSchema = basicFlowItemSchema.extend({
   type: z
-    .enum(["atomic", "compound", "final"]) // no "parallel" or "history"
+    .enum(["atomic", "compound", "parallel", "history", "final"])
     .default("atomic"),
   initialState: stateIdSchema.optional(),
   parent: stateIdSchema.optional(),

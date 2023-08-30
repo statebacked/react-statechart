@@ -18,13 +18,18 @@ function App() {
               },
               onAddTransition(_sourceState) {},
               onDeleteStateItem(_stateId, _itemId) {},
-              onDeleteTransition(_sourceState, _targetState, _event, _condition) {},
+              onDeleteTransition(
+                _sourceState,
+                _targetState,
+                _event,
+                _condition
+              ) {},
               onDeleteTransitionItem(
                 _sourceState,
                 _targetState,
                 _event,
                 _condition,
-                _itemId,
+                _itemId
               ) {},
               onRemoveState(_stateId) {},
               onUpdateState(_stateId, _state) {},
@@ -33,7 +38,7 @@ function App() {
                 _targetState,
                 _event,
                 _condition,
-                _updated,
+                _updated
               ) {},
               onUpdateTransitionTarget(_previousTargetId, _newTargetId) {},
               onUpsertStateItem(_stateId, _item) {},
@@ -42,7 +47,7 @@ function App() {
                 _targetState,
                 _event,
                 _condition,
-                _item,
+                _item
               ) {},
             }}
             flow={{
@@ -66,7 +71,7 @@ function App() {
                   exitActions: [],
                   name: "state1",
                   transitions: [],
-                  type: "compound",
+                  type: "parallel",
                 },
                 ["state2" as schema.StateId]: {
                   assertions: [],

@@ -9,6 +9,10 @@
   z-index: 1;
 }
 
+.parallel .stateNode {
+  border-style: dashed;
+}
+
 .stateNode.topLevel {
   background-color: unset;
   border-color: var(--top-level-node-border-color);
