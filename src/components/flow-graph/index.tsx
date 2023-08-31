@@ -53,6 +53,7 @@ type Action =
 export type FlowGraphProps = {
   flow: DrawableFlow;
   selectedItems?: Array<FlowItemIdentifier>;
+  direction?: "horizontal" | "vertical";
   editable?: {
     getAvailableStates: () => Array<{ id: schema.StateId; name: string }>;
     onUpdateTransitionTarget: (
@@ -125,6 +126,7 @@ export const FlowGraph = ({
   selectedItems: providedSelectedItems,
   editable,
   header,
+  direction = "vertical",
   renderButtons,
 }: FlowGraphProps) => {
   const selectedItems = providedSelectedItems ?? emptySelectedItems;
@@ -202,7 +204,12 @@ export const FlowGraph = ({
       }
 
       const thisLayoutId = nextLayoutId();
-      const graph = flowToElkGraph(sizeMap.current!, rootId, fullFlow);
+      const graph = flowToElkGraph(
+        sizeMap.current!,
+        rootId,
+        fullFlow,
+        direction
+      );
       const elk = getElk();
       elk.layout(graph).then((layout) => {
         dispatch({

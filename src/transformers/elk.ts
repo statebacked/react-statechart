@@ -16,26 +16,26 @@ export type EnrichedElkNode = ElkNode & {
   children?: EnrichedElkNode[];
 };
 
-const rootNodeLayoutOptions = {
+const rootNodeLayoutOptions = (direction: "horizontal" | "vertical") => ({
   "elk.hierarchyHandling": "INCLUDE_CHILDREN",
   "elk.algorithm": "layered",
   "elk.layered.considerModelOrder": "NODES_AND_EDGES",
   "elk.layered.wrapping.strategy": "MULTI_EDGE",
-  "elk.aspectRatio": "0.5",
-  "elk.direction": "DOWN",
+  "elk.aspectRatio": direction === "vertical" ? "0.5" : "2",
+  "elk.direction": direction === "vertical" ? "DOWN" : "RIGHT",
   "elk.layered.spacing.baseValue": "25",
   //"elk.layered.compaction.postCompaction.strategy": "TOP", // TODO: this may fail
-};
+});
 
-const nodeLayoutOptions = {
+const nodeLayoutOptions = (direction: "horizontal" | "vertical") => ({
   "elk​.alignment": "CENTER",
-  "elk.aspectRatio": "0.5",
-  "elk.direction": "DOWN",
+  "elk.aspectRatio": direction === "vertical" ? "0.5" : "2",
+  "elk.direction": direction === "vertical" ? "DOWN" : "RIGHT",
   "elk.layered.edgeRouting.selfLoopOrdering": "SEQUENCED",
   "elk.layered.edgeRouting.selfLoopDistribution": "EQUALLY",
   "elk.layered.spacing.baseValue": "25",
   //"elk.layered.compaction.postCompaction.strategy": "TOP", // TODO: this may fail
-};
+});
 
 export type PositionedItemId = string & { _BRAND: "positionedItem" };
 
@@ -168,7 +168,8 @@ export type Size = {
 export function flowToElkGraph(
   sizeMap: Map<PositionedItemId, Size>,
   rootId: schema.StateId,
-  flow: DrawableFlowWithTopLevelState
+  flow: DrawableFlowWithTopLevelState,
+  direction: "horizontal" | "vertical"
 ): EnrichedElkNode {
   const edgeIdsByTarget = getEdgeIdsByTarget(flow.states);
   const node = _flowToElkGraph(
@@ -176,7 +177,9 @@ export function flowToElkGraph(
     rootId,
     edgeIdsByTarget,
     flow.states,
-    rootId
+    rootId,
+    rootNodeLayoutOptions(direction),
+    nodeLayoutOptions(direction)
   )[0];
   return node;
 }
@@ -230,7 +233,9 @@ export function _flowToElkGraph(
   rootId: schema.StateId,
   edgeIdsByTarget: EdgeIdsByTarget,
   states: DrawableFlow["states"],
-  stateId: schema.StateId
+  stateId: schema.StateId,
+  rootNodeLayoutOptions: Record<string, string>,
+  nodeLayoutOptions: Record<string, string>
 ): [EnrichedElkNode, Set<string>] {
   const childNodes = Object.entries(states)
     .filter(([_stateId, state]) => state!.parent === stateId)
@@ -318,7 +323,9 @@ export function _flowToElkGraph(
         rootId,
         edgeIdsByTarget,
         states,
-        stateId
+        stateId,
+        rootNodeLayoutOptions,
+        nodeLayoutOptions
       );
 
       descendants = union(descendants, nodes);
