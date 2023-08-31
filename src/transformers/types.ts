@@ -26,8 +26,3 @@ export type FlowItem =
       flowItemId: schema.AssertionId;
       flowItemName: string;
     };
-
-export type RequirementAndFlowItems = {
-  requirement: schema.Requirement & { flowName?: string };
-  flowItems: Array<FlowItem>;
-};

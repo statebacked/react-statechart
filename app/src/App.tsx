@@ -1,9 +1,30 @@
 import {
   FlowGraph,
   GridBackground,
-  schema,
+  xstate,
 } from "@statebacked/react-statechart";
+import { createMachine } from "xstate";
 import "@statebacked/react-statechart/index.css";
+
+const machine = createMachine({
+  initial: "state1",
+  states: {
+    state1: {
+      initial: "state2",
+      states: {
+        state2: {
+          on: {
+            EVENT: "state3",
+          },
+          onDone: "state3",
+        },
+        state3: {},
+      },
+    },
+  },
+});
+
+const flow = xstate.xstateMachineToFlow(machine);
 
 function App() {
   return (
@@ -50,42 +71,7 @@ function App() {
                 _item
               ) {},
             }}
-            flow={{
-              name: "my flow",
-              assertions: [],
-              entryActions: [],
-              exitActions: [],
-              id: "" as any,
-              metadata: {
-                actions: {},
-                assertions: {},
-                conditions: {},
-                events: {},
-              },
-              requirements: [],
-              states: {
-                ["state1" as schema.StateId]: {
-                  assertions: [],
-                  collateral: [],
-                  entryActions: [],
-                  exitActions: [],
-                  name: "state1",
-                  transitions: [],
-                  type: "parallel",
-                },
-                ["state2" as schema.StateId]: {
-                  assertions: [],
-                  collateral: [],
-                  entryActions: [],
-                  exitActions: [],
-                  name: "state2",
-                  transitions: [],
-                  type: "atomic",
-                  parent: "state1" as schema.StateId,
-                },
-              },
-              transitions: [],
-            }}
+            flow={flow}
             selectedItems={[]}
           />
         </GridBackground>

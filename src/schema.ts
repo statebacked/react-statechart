@@ -3,9 +3,6 @@ import * as z from "zod";
 export const flowIdSchema = z.string().brand("FlowId");
 export type FlowId = z.infer<typeof flowIdSchema>;
 
-export const requirementIdSchema = z.string().brand("RequirementId");
-export type RequirementId = z.infer<typeof requirementIdSchema>;
-
 export const stateIdSchema = z.string().brand<"stateId">();
 export type StateId = z.infer<typeof stateIdSchema>;
 
@@ -21,19 +18,8 @@ export type EventId = z.infer<typeof eventIdSchema>;
 export const conditionIdSchema = z.string().brand<"conditionId">();
 export type ConditionId = z.infer<typeof conditionIdSchema>;
 
-export const collateralSchema = z.object({
-  name: z.string(),
-  type: z.enum(["FIGMA_FRAME"]),
-  value: z.string(),
-  figmaFrameId: z.string().optional(),
-  figmaFileFingerprint: z.string().optional(),
-  figmaFileKey: z.string().optional(),
-});
-export type Collateral = z.infer<typeof collateralSchema>;
-
 export const basicFlowItemSchema = z.object({
   name: z.string(),
-  collateral: z.array(collateralSchema).default([]),
 });
 
 const eventSchema = basicFlowItemSchema;
@@ -61,6 +47,8 @@ const stateSchema = basicFlowItemSchema.extend({
   assertions: z.array(assertionIdSchema).default([]),
   transitions: z.array(transitionSchema).default([]),
 });
+
+export type State = z.infer<typeof stateSchema>;
 
 export const flowSchema = z
   .object({
@@ -134,11 +122,3 @@ function testFlowItemRefCoversFlowItemType() {
     receiveFlowItemType(firt);
   }
 }
-
-export const requirementSchema = z.object({
-  id: requirementIdSchema,
-  flowId: flowIdSchema,
-  text: z.string(),
-});
-
-export type Requirement = z.infer<typeof requirementSchema>;

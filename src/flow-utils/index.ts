@@ -31,17 +31,6 @@ export const flowItemSchema = z.discriminatedUnion("flowItemType", [
 
 export type FlowItem = z.infer<typeof flowItemSchema>;
 
-export const requirementAndFlowItemsSchema = z.object({
-  requirement: schema.requirementSchema.extend({
-    flowName: z.string().optional(),
-  }),
-  flowItems: z.array(flowItemSchema),
-});
-
-export type RequirementAndFlowItems = z.infer<
-  typeof requirementAndFlowItemsSchema
->;
-
 type PickFlowItemIdentifier<T> = T extends {
   flowItemId: any;
   flowItemType: any;
@@ -63,7 +52,6 @@ export const drawableFlowSchema = schema.flowSchema
   })
   .extend({
     name: schema.flowSchema.shape.name.optional(),
-    requirements: z.array(requirementAndFlowItemsSchema),
   });
 
 export type DrawableFlow = z.infer<typeof drawableFlowSchema>;

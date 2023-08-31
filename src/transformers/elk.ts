@@ -208,7 +208,6 @@ export const getFullFlow = (
     states: effectiveStates,
     transitions: [],
     initialState: flowStateId,
-    requirements: flow.requirements,
   };
 };
 
@@ -218,7 +217,6 @@ const createRootFlowState = (
 ): DrawableFlow["states"][any] => ({
   parent: rootId,
   assertions: flow.assertions,
-  collateral: [],
   entryActions: flow.entryActions,
   exitActions: flow.exitActions,
   name: flow.name ?? "Flow",
