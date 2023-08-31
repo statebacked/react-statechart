@@ -14,9 +14,8 @@ const machine = createMachine({
       states: {
         state2: {
           on: {
-            EVENT: "state3",
+            somethingHappened: "state3",
           },
-          onDone: "state3",
         },
         state3: {},
       },
@@ -29,9 +28,9 @@ const flow = xstate.xstateMachineToFlow(machine);
 function App() {
   return (
     <>
-      <h1>Hi</h1>
-      <div style={{ overflow: "hidden", width: "100%", height: 500 }}>
-        <GridBackground as="section">
+      <h1>@statebacked/react-statechart - React statechart viewer and editor from <a href="https://app.statebacked.dev">StateBacked.dev</a></h1>
+      <div style={{ overflow: "hidden", width: "100%", height: "100%" }}>
+        <GridBackground as="section" style={{height: "100%"}}>
           <FlowGraph
             editable={{
               getAvailableStates() {
