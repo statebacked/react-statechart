@@ -104,7 +104,9 @@ export const definitionToFlowState = (
     transitions: xstate.transitions.map((transition) => ({
       actions: transition.actions.map((action) => action.type as ActionId),
       assertions: [],
-      condition: transition.cond?.type as ConditionId,
+      condition:
+        transition.cond &&
+        ((transition.cond.name ?? transition.cond.type) as ConditionId),
       event: (transition.eventType as EventId) || undefined,
       target: transition.target?.[0].id as StateId,
     })),
@@ -127,6 +129,7 @@ export type ActionObject = {
 };
 
 export type Guard = {
+  name?: string;
   type: string;
 };
 
