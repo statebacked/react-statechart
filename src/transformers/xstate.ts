@@ -8,12 +8,12 @@ import {
   StateId,
 } from "../schema";
 
-export const xstateMachineToFlow = (xstate: {
+export const machineToFlow = (xstate: {
   definition: StateNodeDefinition;
-}): Flow => xstateDefinitionToFlow(xstate.definition);
+}): Flow => machineDefinitionToFlow(xstate.definition);
 
-export const xstateDefinitionToFlow = (xstate: StateNodeDefinition): Flow => {
-  const states = xstateDefinitionToFlowState(undefined, xstate);
+export const machineDefinitionToFlow = (xstate: StateNodeDefinition): Flow => {
+  const states = definitionToFlowState(undefined, xstate);
   const rootParts = states.find(([id]) => id === xstate.id);
   if (!rootParts) {
     return {
@@ -91,7 +91,7 @@ export const xstateDefinitionToFlow = (xstate: StateNodeDefinition): Flow => {
   return flow;
 };
 
-export const xstateDefinitionToFlowState = (
+export const definitionToFlowState = (
   parent: StateId | undefined,
   xstate: StateNodeDefinition
 ): Array<[StateId, State]> => {
@@ -116,7 +116,7 @@ export const xstateDefinitionToFlowState = (
   };
 
   const children = Object.values(xstate.states).flatMap(
-    xstateDefinitionToFlowState.bind(null, stateId)
+    definitionToFlowState.bind(null, stateId)
   );
 
   return [[stateId, state]].concat(children) as any;

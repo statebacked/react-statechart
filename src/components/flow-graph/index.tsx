@@ -52,7 +52,7 @@ type Action =
 
 export type FlowGraphProps = {
   flow: DrawableFlow;
-  selectedItems: Array<FlowItemIdentifier>;
+  selectedItems?: Array<FlowItemIdentifier>;
   editable?: {
     getAvailableStates: () => Array<{ id: schema.StateId; name: string }>;
     onUpdateTransitionTarget: (
@@ -118,14 +118,16 @@ export type FlowGraphProps = {
 const rootId = "root" as schema.StateId;
 const rootPosId = getStatePositionId(rootId);
 const flowStateId = "flow" as schema.StateId;
+const emptySelectedItems: Array<FlowItemIdentifier> = [];
 
 export const FlowGraph = ({
   flow,
-  selectedItems,
+  selectedItems: providedSelectedItems,
   editable,
   header,
   renderButtons,
 }: FlowGraphProps) => {
+  const selectedItems = providedSelectedItems ?? emptySelectedItems;
   const sizeMap = useRef(new Map<PositionedItemId, Size>());
   const [componentState, dispatch] = useReducer(
     (state: State, action: Action): State => {

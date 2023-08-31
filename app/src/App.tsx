@@ -23,14 +23,17 @@ const machine = createMachine({
   },
 });
 
-const flow = xstate.xstateMachineToFlow(machine);
+const flow = xstate.machineToFlow(machine);
 
 function App() {
   return (
     <>
-      <h1>@statebacked/react-statechart - React statechart viewer and editor from <a href="https://app.statebacked.dev">StateBacked.dev</a></h1>
+      <h1>
+        @statebacked/react-statechart - React statechart viewer and editor from{" "}
+        <a href="https://app.statebacked.dev">StateBacked.dev</a>
+      </h1>
       <div style={{ overflow: "hidden", width: "100%", height: "100%" }}>
-        <GridBackground as="section" style={{height: "100%"}}>
+        <GridBackground as="section" style={{ height: "100%" }}>
           <FlowGraph
             editable={{
               getAvailableStates() {
@@ -71,7 +74,6 @@ function App() {
               ) {},
             }}
             flow={flow}
-            selectedItems={[]}
           />
         </GridBackground>
       </div>
