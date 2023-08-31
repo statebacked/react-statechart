@@ -48,7 +48,7 @@
     "packackge.json",
     "README.md",
     "LICENSE",
-    "dist"
+    "dist/**/*"
   ],
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.3",
