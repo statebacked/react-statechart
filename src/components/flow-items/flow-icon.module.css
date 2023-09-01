@@ -27,6 +27,38 @@
   border: none;
 }
 
+.entryAction {
+  composes: flowItemIcon;
+  background-color: var(--action-background-color);
+  border: 1px solid var(--action-border-color);
+  background-image: url(./entry-action.svg);
+}
+
+.entryAction.filled {
+  background-image: url(./entry-action.svg);
+}
+
+.entryAction.transparent {
+  background-color: transparent;
+  border: none;
+}
+
+.exitAction {
+  composes: flowItemIcon;
+  background-color: var(--action-background-color);
+  border: 1px solid var(--action-border-color);
+  background-image: url(./exit-action.svg);
+}
+
+.exitAction.filled {
+  background-image: url(./exit-action.svg);
+}
+
+.exitAction.transparent {
+  background-color: transparent;
+  border: none;
+}
+
 .assertion {
   composes: flowItemIcon;
   background-color: var(--expectation-background-color);

@@ -29,6 +29,10 @@ export const flowItemIconComponentForType = (
   switch (flowItemType) {
     case "action":
       return ActionIcon;
+    case "entry-action":
+      return EntryActionIcon;
+    case "exit-action":
+      return ExitActionIcon;
     case "assertion":
       return AssertionIcon;
     case "condition":
@@ -60,6 +64,36 @@ export const ActionIcon = ({ className, transparent, filled }: IconProps) => {
       className={`${styles.action} ${transparent ? styles.transparent : ""} ${
         className ?? ""
       } ${filled ? styles.filled : ""}`}
+    ></span>
+  );
+};
+
+export const EntryActionIcon = ({
+  className,
+  transparent,
+  filled,
+}: IconProps) => {
+  return (
+    <span
+      title={flowItemTypePresentation.action.title}
+      className={`${styles.entryAction} ${
+        transparent ? styles.transparent : ""
+      } ${className ?? ""} ${filled ? styles.filled : ""}`}
+    ></span>
+  );
+};
+
+export const ExitActionIcon = ({
+  className,
+  transparent,
+  filled,
+}: IconProps) => {
+  return (
+    <span
+      title={flowItemTypePresentation.action.title}
+      className={`${styles.exitAction} ${
+        transparent ? styles.transparent : ""
+      } ${className ?? ""} ${filled ? styles.filled : ""}`}
     ></span>
   );
 };

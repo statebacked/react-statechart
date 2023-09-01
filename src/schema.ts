@@ -86,6 +86,8 @@ export const flowItemTypeSchema = z.enum([
   "event",
   "condition",
   "action",
+  "entry-action",
+  "exit-action",
   "assertion",
 ]);
 export type FlowItemType = z.infer<typeof flowItemTypeSchema>;
@@ -105,6 +107,14 @@ export const flowItemRefSchema = z.discriminatedUnion("type", [
   }),
   z.object({
     type: z.literal("action"),
+    id: actionIdSchema,
+  }),
+  z.object({
+    type: z.literal("entry-action"),
+    id: actionIdSchema,
+  }),
+  z.object({
+    type: z.literal("exit-action"),
     id: actionIdSchema,
   }),
   z.object({

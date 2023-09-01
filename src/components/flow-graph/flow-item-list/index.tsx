@@ -1,11 +1,11 @@
 import {
   DrawableFlow,
   FlowItemIdentifier,
+  FlowItem,
   getMetadata,
 } from "../../../flow-utils";
 import { FlowItemIcon } from "../../flow-items";
 import styles from "./flow-item-list.module.css";
-import { FlowItem } from "../../../transformers/types";
 import { RiAddCircleLine, RiDeleteBinLine } from "react-icons/ri";
 import { IconButton } from "../../icon-button";
 import { useModal } from "../../../hooks/use-modal";

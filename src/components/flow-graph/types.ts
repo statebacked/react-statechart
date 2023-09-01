@@ -1,6 +1,5 @@
 import * as schema from "../../schema";
-import { FlowItem } from "../../transformers/types";
-import { DrawableFlow, FlowItemIdentifier } from "../../flow-utils";
+import { DrawableFlow, FlowItemIdentifier, FlowItem } from "../../flow-utils";
 
 export type Editable = {
   getAvailableStates: () => Array<{ id: schema.StateId; name: string }>;

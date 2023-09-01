@@ -113,12 +113,19 @@ export const StateNode = ({
   );
 
   const flowItems = state.entryActions
-    .concat(state.exitActions)
     .map(
       (action): FlowItemIdentifier => ({
         flowItemId: action,
-        flowItemType: "action",
+        flowItemType: "entry-action",
       })
+    )
+    .concat(
+      state.exitActions.map(
+        (action): FlowItemIdentifier => ({
+          flowItemId: action,
+          flowItemType: "exit-action",
+        })
+      )
     )
     .concat(
       state.assertions.map((assertion) => ({

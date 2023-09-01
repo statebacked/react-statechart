@@ -19,6 +19,14 @@ export const flowItemTypePresentation: Record<
     title: "Action",
     groupTitle: "Actions",
   },
+  "entry-action": {
+    title: "Entry action",
+    groupTitle: "Entry actions",
+  },
+  "exit-action": {
+    title: "Exit action",
+    groupTitle: "Exit actions",
+  },
   assertion: {
     title: "Expectation",
     groupTitle: "Expectations",

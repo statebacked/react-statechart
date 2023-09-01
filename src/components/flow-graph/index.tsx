@@ -21,7 +21,7 @@ import { usePanAndZoom } from "./use-pan-and-zoom";
 import { TransitionNode } from "./transition-node";
 import { TransitionsView } from "./transitions-view";
 import { usePosition } from "../../hooks/use-position";
-import { FlowItem } from "../../transformers/types";
+import { FlowItem } from "../../flow-utils";
 
 const getElk = (() => {
   let elk: iELK | undefined;

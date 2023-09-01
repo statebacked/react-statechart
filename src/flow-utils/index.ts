@@ -23,6 +23,16 @@ export const flowItemSchema = z.discriminatedUnion("flowItemType", [
     flowItemName: z.string(),
   }),
   z.object({
+    flowItemType: z.literal("entry-action"),
+    flowItemId: schema.actionIdSchema,
+    flowItemName: z.string(),
+  }),
+  z.object({
+    flowItemType: z.literal("exit-action"),
+    flowItemId: schema.actionIdSchema,
+    flowItemName: z.string(),
+  }),
+  z.object({
     flowItemType: z.literal("assertion"),
     flowItemId: schema.assertionIdSchema,
     flowItemName: z.string(),
@@ -190,6 +200,8 @@ export const getMetadata = (
 ) => {
   switch (flowItem.flowItemType) {
     case "action":
+    case "entry-action":
+    case "exit-action":
       return flow.metadata.actions[flowItem.flowItemId];
     case "assertion":
       return flow.metadata.assertions[flowItem.flowItemId];
