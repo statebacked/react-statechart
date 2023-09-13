@@ -155,6 +155,8 @@ export const containsFlowItem = (
       i.flowItemId === item.flowItemId && i.flowItemType === item.flowItemType
   );
 
+export type Transition = schema.Flow["transitions"][any];
+
 export const transitionRelevantToFlowItems = (
   flow: DrawableFlow,
   flowItems: Array<FlowItemIdentifier>,
