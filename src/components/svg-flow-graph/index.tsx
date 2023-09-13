@@ -119,7 +119,7 @@ const sizeForState = (
       headingHeight +
       (itemCount > 0 ? headingBottomMargin : 0),
     padding: {
-      top: padding + headingHeight,
+      top: padding + headingHeight + headingBottomMargin,
       bottom: padding,
       left: padding,
       right: padding,

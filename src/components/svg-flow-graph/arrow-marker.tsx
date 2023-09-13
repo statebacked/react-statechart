@@ -3,8 +3,8 @@ export const ArrowMarker = ({ id }: { id: string }) => {
     <marker
       id={id}
       viewBox="0 0 10 10"
-      markerWidth="5"
-      markerHeight="5"
+      markerWidth="3"
+      markerHeight="3"
       refX="0"
       refY="5"
       markerUnits="strokeWidth"

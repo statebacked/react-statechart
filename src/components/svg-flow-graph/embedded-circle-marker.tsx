@@ -3,8 +3,8 @@ export const EmbeddedCircleMarker = ({ id }: { id: string }) => {
     <marker
       id={id}
       viewBox="0 0 10 10"
-      markerWidth="10"
-      markerHeight="10"
+      markerWidth="7"
+      markerHeight="7"
       refX="0"
       refY="5"
       markerUnits="strokeWidth"
