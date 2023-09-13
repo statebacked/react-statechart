@@ -1,27 +1,15 @@
 import * as schema from "../../../schema";
-import { useCallback, useEffect, useReducer } from "react";
 import {
   getStatePositionId,
   PositionedItemId,
   PositionInfo,
 } from "../../../transformers/elk";
-import {
-  DrawableFlow,
-  FlowItemIdentifier,
-  relevantToFlowItems,
-} from "../../../flow-utils";
-import styles from "./state-node.module.css";
-import { FlowItemIcon } from "../../flow-items";
+import { DrawableFlow, FlowItemIdentifier } from "../../../flow-utils";
 import { TransitionInfo, SvgTransitionsView } from "../transitions-view";
 import { SvgFlowItemList } from "../flow-item-list";
-import { Position, usePosition } from "../../../hooks/use-position";
-import { EditableOnClick } from "../../editable-on-click";
-import { Select } from "../../select";
-import { flowItemTypePresentation } from "../../../data/flows";
-import { IconButton } from "../../icon-button";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { SvgFlowItemIcon } from "../../svg-flow-items";
 import {
+  cornerRadius,
   headingBottomMargin,
   headingHeight,
   iconSize,
@@ -51,6 +39,9 @@ export const StateNode = ({
   if (!pos) {
     return null;
   }
+
+  const parent = state.parent && flow.states[state.parent];
+  const isParallel = parent?.type === "parallel";
 
   const childStates = Object.entries(flow.states).filter(
     ([_childId, state]) => state!.parent === stateId
@@ -89,8 +80,11 @@ export const StateNode = ({
         y={pos.y}
         width={pos.width}
         height={pos.height}
+        rx={cornerRadius}
+        ry={cornerRadius}
         fill={isTopLevel ? "none" : "#ffefc919"}
         stroke="#ffdf92"
+        strokeDasharray={isParallel ? "3 4" : undefined}
       />
       <SvgFlowItemIcon
         flowItemType="state"

@@ -4,12 +4,11 @@ import {
   PositionedItemId,
 } from "../../../transformers/elk";
 import { DrawableFlow, FlowItemIdentifier } from "../../../flow-utils";
-import styles from "./transition-node.module.css";
-import { FlowItemIcon } from "../../flow-items";
 import { SvgFlowItemList } from "../flow-item-list";
 import * as flows from "../../../data/flows";
 import { SvgFlowItemIcon } from "../../svg-flow-items";
 import {
+  cornerRadius,
   headingBottomMargin,
   headingHeight,
   iconSize,
@@ -76,6 +75,8 @@ export const SvgTransitionNode = ({
         y={pos.y}
         width={pos.width}
         height={pos.height}
+        rx={cornerRadius}
+        ry={cornerRadius}
         fill="#cebdff66"
         stroke="#a88aff"
       />
