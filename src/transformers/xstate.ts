@@ -100,7 +100,7 @@ export const definitionToFlowState = (
     parent,
     name: xstate.key,
     type: xstate.type,
-    initialState: xstate.initial as StateId,
+    initialState: [xstate.id, xstate.initial].join(".") as StateId,
     transitions: xstate.transitions.map((transition) => ({
       actions: transition.actions.map((action) => action.type as ActionId),
       assertions: [],
