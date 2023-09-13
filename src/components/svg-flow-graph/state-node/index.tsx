@@ -22,7 +22,7 @@ import { IconButton } from "../../icon-button";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { SvgFlowItemIcon } from "../../svg-flow-items";
 import {
-  headingBottomPadding,
+  headingBottomMargin,
   headingHeight,
   iconSize,
   padding,
@@ -78,6 +78,10 @@ export const StateNode = ({
       }))
     );
 
+  const hasContent = childStates.length > 0 || flowItems.length > 0;
+
+  const titleY = hasContent ? pos.y + padding : pos.y + pos.height / 2 - 16 / 2;
+
   return (
     <>
       <rect
@@ -91,32 +95,32 @@ export const StateNode = ({
       <SvgFlowItemIcon
         flowItemType="state"
         x={pos.x + padding}
-        y={pos.y + padding + 5 - 0.8 * 16}
+        y={titleY}
         size={16}
       />
       <SizedText
         x={pos.x + padding + iconSize}
-        y={pos.y + padding + 5}
+        y={titleY + 13}
         width={pos.width - 2 * padding - iconSize}
         height={10}
         fontWeight={600}
       >
         {state.name}
       </SizedText>
-      <path
-        d={`M ${pos.x + padding} ${
-          pos.y + padding + headingHeight - headingBottomPadding
-        } L ${pos.x + pos.width - padding} ${
-          pos.y + padding + headingHeight - headingBottomPadding
-        }`}
-        stroke="#ffdf92"
-      />
+      {hasContent ? (
+        <path
+          d={`M ${pos.x + padding} ${pos.y + padding + headingHeight} L ${
+            pos.x + pos.width - padding
+          } ${pos.y + padding + headingHeight}`}
+          stroke="#ffdf92"
+        />
+      ) : null}
       <SvgFlowItemList
         flow={flow}
         items={flowItems}
         x1={pos.x + padding}
         x2={pos.x + pos.width - padding}
-        y1={pos.y + padding + headingHeight}
+        y1={pos.y + padding + headingHeight + headingBottomMargin}
         y2={pos.y + pos.height - padding}
       />
       {childStates.length > 0 ? (

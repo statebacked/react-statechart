@@ -10,7 +10,7 @@ import { SvgFlowItemList } from "../flow-item-list";
 import * as flows from "../../../data/flows";
 import { SvgFlowItemIcon } from "../../svg-flow-items";
 import {
-  headingBottomPadding,
+  headingBottomMargin,
   headingHeight,
   iconSize,
   padding,
@@ -65,6 +65,10 @@ export const SvgTransitionNode = ({
   );
   const items = conditionItems.concat(actionItems).concat(assertionItems);
 
+  const hasContent = items.length > 0;
+
+  const titleY = hasContent ? pos.y + padding : pos.y + pos.height / 2 - 16 / 2;
+
   return (
     <>
       <rect
@@ -78,26 +82,28 @@ export const SvgTransitionNode = ({
       <SvgFlowItemIcon
         flowItemType="event"
         x={pos.x + padding}
-        y={pos.y + padding + 5 - 0.8 * 16}
+        y={titleY}
         size={16}
       />
       <SizedText
         fontWeight={600}
         x={pos.x + padding + iconSize}
-        y={pos.y + padding + 5}
+        y={titleY + 13}
         width={pos.width - 2 * padding - iconSize}
-        height={16}
+        height={10}
       >
         {eventName}
       </SizedText>
-      <path
-        d={`M ${pos.x + padding} ${
-          pos.y + padding + headingHeight - headingBottomPadding
-        } L ${pos.x + pos.width - padding} ${
-          pos.y + padding + headingHeight - headingBottomPadding
-        }`}
-        stroke="#a88aff"
-      />
+      {hasContent ? (
+        <path
+          d={`M ${pos.x + padding} ${
+            pos.y + padding + headingHeight - headingBottomMargin
+          } L ${pos.x + pos.width - padding} ${
+            pos.y + padding + headingHeight - headingBottomMargin
+          }`}
+          stroke="#a88aff"
+        />
+      ) : null}
       <SvgFlowItemList
         flow={flow}
         items={items}

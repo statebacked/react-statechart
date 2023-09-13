@@ -17,6 +17,7 @@ import {
 import * as schema from "../../schema";
 import { SvgTransitionsView } from "./transitions-view";
 import {
+  headingBottomMargin,
   headingHeight,
   iconSize,
   itemHeight,
@@ -70,7 +71,11 @@ const sizeForTransition = (
       padding * 2 +
       iconSize +
       Math.max(Math.min(maxChars * letterWidth, 500), 50),
-    height: padding * 2 + itemCount * itemHeight + headingHeight,
+    height:
+      padding * 2 +
+      itemCount * itemHeight +
+      headingHeight +
+      (itemCount > 0 ? headingBottomMargin : 0),
     padding: {
       top: padding,
       bottom: padding,
@@ -108,7 +113,11 @@ const sizeForState = (
       padding * 2 +
       iconSize +
       Math.max(Math.min(maxChars * letterWidth, 500), 50),
-    height: padding * 2 + itemCount * itemHeight + headingHeight,
+    height:
+      padding * 2 +
+      itemCount * itemHeight +
+      headingHeight +
+      (itemCount > 0 ? headingBottomMargin : 0),
     padding: {
       top: padding + headingHeight,
       bottom: padding,
