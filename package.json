@@ -1,6 +1,6 @@
 {
   "name": "@statebacked/react-statechart",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Statechart viewer and editor from StateBacked.dev",
   "main": "dist/cjs/index.js",
   "types": "./dist/dts/index.d.ts",
