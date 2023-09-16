@@ -4,6 +4,7 @@
   "description": "Statechart viewer and editor from StateBacked.dev",
   "main": "dist/cjs/index.js",
   "types": "./dist/dts/index.d.ts",
+  "type": "module",
   "exports": {
     ".": {
       "types": {
@@ -23,7 +24,7 @@
     }
   },
   "scripts": {
-    "build": "rollup --config ./rollup.config.mjs && tsc --emitDeclarationOnly --declaration --outDir dist/dts",
+    "build": "rollup --config ./rollup.config.mjs && tsc --emitDeclarationOnly --declaration --outDir dist/dts && echo '{ \"type\": \"commonjs\" }' > dist/cjs/package.json",
     "prettier": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
