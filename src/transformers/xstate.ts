@@ -12,15 +12,18 @@ export const machineToFlow = (xstate: {
   definition: StateNodeDefinition;
 }): Flow => machineDefinitionToFlow(xstate.definition);
 
+const toStateId = (stateId: string) => stateId.replace(/[:.]/g, "_") as StateId;
+
 export const machineDefinitionToFlow = (xstate: StateNodeDefinition): Flow => {
   const states = definitionToFlowState(undefined, xstate);
-  const rootParts = states.find(([id]) => id === xstate.id);
+  const machineId = toStateId(xstate.id);
+  const rootParts = states.find(([id]) => id === machineId);
   if (!rootParts) {
     return {
       assertions: [],
       entryActions: [],
       exitActions: [],
-      id: xstate.id as unknown as FlowId,
+      id: machineId as unknown as FlowId,
       metadata: {
         actions: {},
         assertions: {},
@@ -95,12 +98,12 @@ export const definitionToFlowState = (
   parent: StateId | undefined,
   xstate: StateNodeDefinition
 ): Array<[StateId, State]> => {
-  const stateId = xstate.id as StateId;
+  const stateId = toStateId(xstate.id);
   const state: State = {
     parent,
     name: xstate.key,
     type: xstate.type,
-    initialState: [xstate.id, xstate.initial].join(".") as StateId,
+    initialState: toStateId([xstate.id, xstate.initial].join(".")),
     transitions: xstate.transitions
       .map((t) => ({
         ...t,
@@ -122,7 +125,7 @@ export const definitionToFlowState = (
           transition.cond &&
           ((transition.cond.name ?? transition.cond.type) as ConditionId),
         event: (transition.eventType as EventId) || undefined,
-        target: transition.target?.[0].id as StateId,
+        target: transition.target?.length ? toStateId(transition.target[0].id) : undefined,
       })),
     entryActions: xstate.entry
       .filter(
