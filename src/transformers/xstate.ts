@@ -125,7 +125,9 @@ export const definitionToFlowState = (
           transition.cond &&
           ((transition.cond.name ?? transition.cond.type) as ConditionId),
         event: (transition.eventType as EventId) || undefined,
-        target: transition.target?.length ? toStateId(transition.target[0].id) : undefined,
+        target: transition.target?.length
+          ? toStateId(transition.target[0].id)
+          : undefined,
       })),
     entryActions: xstate.entry
       .filter(
