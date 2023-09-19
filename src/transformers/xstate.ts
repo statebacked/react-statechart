@@ -109,6 +109,10 @@ export const definitionToFlowState = (
             ? `After ${t.delay}ms`
             : t.delay === "string"
             ? `After '${t.delay}'`
+            : t.eventType.startsWith("done.invoke.")
+            ? `"${t.eventType.replace(/^done[.]invoke[.]/, "")}" succeeded`
+            : t.eventType.startsWith("error.platform.")
+            ? `"${t.eventType.replace(/^error[.]platform[.]/, "")}" failed`
             : t.eventType,
       }))
       .map((transition) => ({
