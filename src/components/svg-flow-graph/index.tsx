@@ -63,7 +63,7 @@ const sizeForTransition = (
       transition.actions.map((a) => flow.metadata.actions[a]?.name.length ?? 0)
     )
     .concat(transition.condition ? [transition.condition.length] : [])
-    .concat(transition.event ? [transition.event.length] : [])
+    .concat([name.length])
     .reduce((a, b) => Math.max(a, b), 0);
 
   return {
