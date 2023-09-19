@@ -116,6 +116,8 @@ export const definitionToFlowState = (
             ? `"${t.eventType.replace(/^done[.]invoke[.]/, "")}" succeeded`
             : t.eventType.startsWith("error.platform.")
             ? `"${t.eventType.replace(/^error[.]platform[.]/, "")}" failed`
+            : t.eventType.startsWith("done.state.")
+            ? `"${t.source.key}" completed`
             : t.eventType,
       }))
       .map((transition) => ({
@@ -160,6 +162,7 @@ export type Guard = {
 };
 
 export type TransitionDefinition = {
+  source: StateNodeDefinition;
   target: Array<{ id: string }> | undefined;
   actions: Array<ActionObject>;
   cond?: Guard;
