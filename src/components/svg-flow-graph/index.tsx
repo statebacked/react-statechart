@@ -206,7 +206,11 @@ export const SvgFlowGraph = ({ fullFlow, layout }: SvgFlowGraphProps) => {
   );
 
   return (
-    <svg width={rootPos?.width} height={rootPos?.height} xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={rootPos?.width}
+      height={rootPos?.height}
+      xmlns="http://www.w3.org/2000/svg"
+    >
       {topLevelStates.map(([stateId, state]) => (
         <StateNode
           key={stateId}
