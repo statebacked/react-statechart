@@ -258,29 +258,27 @@ export function _flowToElkGraph(
     (edge) => !edge.sources[0].startsWith("synth:")
   );
 
-  const syntheticEdgeNodes = ourEdges
-    .filter((edge) => edge.targets[0].startsWith("synth:"))
-    .map((edge) => {
-      const transitionId = edge.data.transitionId;
-      const pos = sizeMap.get(transitionId);
+  const syntheticEdgeNodes = syntheticEdges.map((edge) => {
+    const transitionId = edge.data.transitionId;
+    const pos = sizeMap.get(transitionId);
 
-      return {
-        id: transitionId,
-        height: pos?.height,
-        width: pos?.width,
-        layoutOptions: layoutOpts,
-        sourceState: edge.data.source,
-        syntheticEdgeNodes: [],
-        ports: [
-          {
-            id: `synth:target:${transitionId}`,
-          },
-          {
-            id: `synth:source:${transitionId}`,
-          },
-        ],
-      };
-    });
+    return {
+      id: transitionId,
+      height: pos?.height,
+      width: pos?.width,
+      layoutOptions: layoutOpts,
+      sourceState: edge.data.source,
+      syntheticEdgeNodes: [],
+      ports: [
+        {
+          id: `synth:target:${transitionId}`,
+        },
+        {
+          id: `synth:source:${transitionId}`,
+        },
+      ],
+    };
+  });
 
   const sourcePorts = ourEdges.map((edge) => ({
     edge,
@@ -345,11 +343,19 @@ export function _flowToElkGraph(
         }
       );
 
+      const transitionsToLift = new Set(
+        otherEdges.map((e) => e.data.transitionId)
+      );
+      const [liftedChildren, properChildren] = partition(
+        subGraph.children || [],
+        (child) => transitionsToLift.has(child.id as PositionedItemId)
+      );
+
       edges = edges.concat(otherEdges);
 
-      return subGraph.syntheticEdgeNodes.concat([
-        { ...subGraph, edges: localEdges },
-      ]);
+      return subGraph.syntheticEdgeNodes
+        .concat([{ ...subGraph, children: properChildren, edges: localEdges }])
+        .concat(liftedChildren);
     })
     .sort((a, b) =>
       a.id === initialChildStatePositionId
