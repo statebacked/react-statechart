@@ -162,7 +162,7 @@ export type Guard = {
 };
 
 export type TransitionDefinition = {
-  source: StateNodeDefinition;
+  source: { key: string };
   target: Array<{ id: string }> | undefined;
   actions: Array<ActionObject>;
   cond?: Guard;
