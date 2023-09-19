@@ -101,19 +101,35 @@ export const definitionToFlowState = (
     name: xstate.key,
     type: xstate.type,
     initialState: [xstate.id, xstate.initial].join(".") as StateId,
-    transitions: xstate.transitions.map((transition) => ({
-      actions: transition.actions.map((action) => action.type as ActionId),
-      assertions: [],
-      condition:
-        transition.cond &&
-        ((transition.cond.name ?? transition.cond.type) as ConditionId),
-      event: (transition.eventType as EventId) || undefined,
-      target: transition.target?.[0].id as StateId,
-    })),
+    transitions: xstate.transitions
+      .map((t) => ({
+        ...t,
+        eventType:
+          typeof t.delay === "number"
+            ? `After ${t.delay}ms`
+            : t.delay === "string"
+            ? `After '${t.delay}'`
+            : t.eventType,
+      }))
+      .map((transition) => ({
+        actions: transition.actions.map((action) => action.type as ActionId),
+        assertions: [],
+        condition:
+          transition.cond &&
+          ((transition.cond.name ?? transition.cond.type) as ConditionId),
+        event: (transition.eventType as EventId) || undefined,
+        target: transition.target?.[0].id as StateId,
+      })),
     entryActions: xstate.entry
+      .filter(
+        (action) =>
+          action.type !== "xstate.send" || typeof action.delay === "undefined"
+      )
       .map((action) => action.type as ActionId)
       .concat(xstate.invoke.map((invoke) => invoke.id as ActionId)),
-    exitActions: xstate.exit.map((action) => action.type as ActionId),
+    exitActions: xstate.exit
+      .filter((action) => action.type !== "xstate.cancel")
+      .map((action) => action.type as ActionId),
     assertions: [],
   };
 
@@ -126,6 +142,7 @@ export const definitionToFlowState = (
 
 export type ActionObject = {
   type: string;
+  delay?: number | string;
 };
 
 export type Guard = {
@@ -138,6 +155,7 @@ export type TransitionDefinition = {
   actions: Array<ActionObject>;
   cond?: Guard;
   eventType: string;
+  delay?: number | string;
 };
 
 export type InvokeDefinition = {
