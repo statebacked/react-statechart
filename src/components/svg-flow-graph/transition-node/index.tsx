@@ -110,7 +110,7 @@ export const SvgTransitionNode = ({
         items={items}
         x1={pos.x + padding}
         x2={pos.x + pos.width - padding}
-        y1={pos.y + padding + headingHeight}
+        y1={pos.y + padding + headingHeight + headingBottomMargin}
         y2={pos.y + pos.height - padding}
       />
     </>
