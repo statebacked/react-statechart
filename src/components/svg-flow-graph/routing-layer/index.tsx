@@ -34,8 +34,9 @@ export const RoutingLayer = ({
   return (
     <svg x1={0} y1={0} width="100%" height="100%">
       {connectorPoss.map(({ connector }, connIdx) => {
-        const endMarkerId = `end-${sourceState}-${connIdx}`;
-        const startMarkerId = `start-${sourceState}-${connIdx}`;
+        const sourceId = sourceState.replace(/[^a-zA-Z0-9_-]/g, "-");
+        const endMarkerId = `end-${sourceId}-${connIdx}`;
+        const startMarkerId = `start-${sourceId}-${connIdx}`;
         const path = pointsToPath(connector.points);
         const reversePath = pointsToPath(
           Array.from(connector.points).reverse()
