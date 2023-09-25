@@ -43,6 +43,6 @@ export const eventName = (
 ): string => {
   return (
     (transition.event && flow.metadata.events[transition.event]?.name) ??
-    "Immediate transition"
+    "Immediately"
   );
 };

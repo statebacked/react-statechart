@@ -24,6 +24,7 @@ import {
   letterWidth,
   padding,
 } from "./sizes";
+import * as flows from "../../data/flows";
 
 const getElk = (() => {
   let elk: iELK | undefined;
@@ -50,7 +51,7 @@ const sizeForTransition = (
   flow: DrawableFlow,
   transition: Transition
 ): Size => {
-  const name = transition.event ?? "Immediate transition";
+  const name = flows.eventName(flow, transition);
 
   const itemCount =
     transition.actions.length +
